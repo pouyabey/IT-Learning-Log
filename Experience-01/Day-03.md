@@ -1,6 +1,6 @@
 # Day 3 – Intune Device Inventory and Compliance Audit
 
-Today is my third day at my internship, and I have started working on a new project focused on Microsoft Intune device management and compliance.
+Today is my third day, and I have started working on a new project focused on Microsoft Intune device management and compliance.
 
 ## Project Overview
 
