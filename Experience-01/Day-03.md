@@ -56,5 +56,33 @@ This completes the initial inventory and compliance review. The next step will f
 
 ---
 
+## Step 2 – Review Compliance Policy Assignment and Scope
+
+The first part of Step 2 focused on reviewing how the Basic Compliance policy is assigned and monitoring its current deployment status.
+
+I opened the Basic Compliance policy and reviewed its assignment settings.
+
+### Policy Assignment
+
+The policy is currently assigned to:
+
+- All users
+
+There are no excluded groups.
+
+### Policy Monitoring
+
+The current policy status shows:
+
+- Compliant devices: 110
+- Noncompliant devices: 2
+- Other status: 4
+- Total devices evaluated: 116
+
+I also searched for one of the devices identified in Step 1 that only showed the Default Device Compliance Policy. That device did not appear in the Basic Compliance policy results.
+
+This is an important finding because the Basic Compliance policy is assigned to all users, but the device is still not being evaluated by the policy. The next step is to review the device's user association, Entra ID registration details, and applied compliance policies to determine why it is missing from the Basic Compliance policy scope.
+
+
 
 
