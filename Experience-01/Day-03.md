@@ -41,6 +41,20 @@ The current environment includes 137 managed devices:
 
 All devices are currently managed by Microsoft Intune. Most devices are classified as Corporate-owned, while a smaller number are marked as Personal.
 
-During the initial review, I also identified several noncompliant devices. Some of these devices had checked in recently, while others had not checked in for an extended period. This showed that noncompliance and device inactivity need to be investigated separately.
+During the initial review, I identified several noncompliant devices. Some had checked in recently, while others had not checked in for an extended period. This showed that noncompliance and device inactivity need to be investigated separately.
 
-The next step will be to review active noncompliant devices and identify the specific compliance policies or settings causing the issues.
+I then reviewed several recently active noncompliant devices to identify the specific causes of noncompliance. The most common issues found were:
+
+- Firewall noncompliance under the Basic Compliance policy
+- TPM noncompliance on multiple devices
+- Devices marked as noncompliant because they were not considered active
+- One device that did not appear to have the Basic Compliance policy assigned
+
+The initial review showed that Firewall and TPM requirements are recurring compliance issues in the environment. It also identified inactive devices and a possible compliance policy assignment gap that require further investigation.
+
+This completes the initial inventory and compliance review. The next step will focus on reviewing compliance policy assignments, investigating recurring failures, and determining which devices should be prioritized for remediation.
+
+---
+
+
+
