@@ -58,7 +58,7 @@ This completes the initial inventory and compliance review. The next step will f
 
 ## Step 2 – Review Compliance Policy Assignment and Scope
 
-The first part of Step 2 focused on reviewing how the Basic Compliance policy is assigned and monitoring its current deployment status.
+The second step focused on reviewing how the Basic Compliance policy is assigned and investigating why one managed device was not receiving the policy.
 
 I opened the Basic Compliance policy and reviewed its assignment settings.
 
@@ -79,9 +79,45 @@ The current policy status shows:
 - Other status: 4
 - Total devices evaluated: 116
 
-I also searched for one of the devices identified in Step 1 that only showed the Default Device Compliance Policy. That device did not appear in the Basic Compliance policy results.
+I searched for one of the devices identified in Step 1 that only showed the Default Device Compliance Policy. The device did not appear in the Basic Compliance policy results.
 
-This is an important finding because the Basic Compliance policy is assigned to all users, but the device is still not being evaluated by the policy. The next step is to review the device's user association, Entra ID registration details, and applied compliance policies to determine why it is missing from the Basic Compliance policy scope.
+To investigate further, I reviewed the device and its associated user.
+
+### Device and User Review
+
+The device had:
+
+- A valid Primary User
+- Microsoft Entra joined status
+- Microsoft Intune as its MDM provider
+- A registered owner
+- Only the Default Device Compliance Policy visible under its compliance policies
+
+The associated user account was:
+
+- Enabled
+- User type: Member
+
+The Default Device Compliance Policy showed that the device had a compliance policy assigned, but the Basic Compliance policy was still missing.
+
+### License Investigation
+
+I then reviewed the user's assigned licenses and found:
+
+- Office 365 E1
+- Microsoft Power Automate Free
+
+The user did not have Microsoft 365 E3 assigned.
+
+I also reviewed the organization's available licenses and confirmed that Microsoft 365 E3 licenses are available in the tenant. Users whose devices are receiving the Basic Compliance policy were found to have Microsoft 365 E3 assigned.
+
+This created a strong indication that licensing may be related to the issue. Microsoft 365 E3 includes Intune licensing, while Office 365 E1 alone does not.
+
+### Current Finding
+
+The investigation identified a likely licensing-related cause for the missing Basic Compliance policy. The affected user does not have an Intune-inclusive license assigned, while users whose devices successfully receive the policy have Microsoft 365 E3 licenses.
+
+No configuration or licensing changes were made during this investigation. Further validation should be completed before making any changes.
 
 
 
