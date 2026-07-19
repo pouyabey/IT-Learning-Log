@@ -135,6 +135,42 @@ This confirmed that the missing Intune-inclusive license was the root cause, eve
 ---
 
 
+## Step 3 – Investigate Firewall Compliance Failures
+
+After resolving the policy assignment and licensing issue, I investigated devices that were receiving the Basic Compliance policy but were still reporting as noncompliant because of the Windows Firewall requirement.
+
+The investigation showed that the firewall compliance failures were not caused by a single issue. Two different scenarios were identified.
+
+### Policy Configuration Conflicts
+
+On some devices, firewall-related configurations were being managed through multiple sources, including:
+
+- On-premises Active Directory Group Policy
+- Microsoft Intune
+- Microsoft Entra-related device management configurations
+
+These overlapping configurations created policy conflicts and inconsistent firewall settings on some endpoints. This demonstrated the importance of reviewing all management layers when troubleshooting compliance issues in a hybrid environment.
+
+### Previous Firewall Configuration Changes
+
+On other devices, the firewall configuration had previously been manually modified during remote troubleshooting sessions.
+
+In these cases, users had experienced connectivity problems between installed applications and their application servers. To restore connectivity, firewall exceptions had been created and specific application files or components had been added to the firewall allow list.
+
+Although these changes resolved the original application connectivity problem, they also modified the expected firewall configuration and caused the devices to be reported as noncompliant under the Basic Compliance policy.
+
+### Current Finding
+
+The firewall-related noncompliance was therefore traced to two main causes:
+
+- Conflicting firewall policies applied from different management systems
+- Previous manual firewall changes made to resolve application-to-server connectivity issues
+
+This investigation showed that a noncompliant firewall status does not always mean that the Windows Firewall is completely disabled. Existing exceptions, manual configuration changes, and conflicting management policies can also affect how a device is evaluated against the organization's compliance requirements.
+
+The next step is to review the affected firewall configurations more closely and determine how to preserve required application connectivity while maintaining a consistent and compliant security configuration.
+
+
 
 
 
