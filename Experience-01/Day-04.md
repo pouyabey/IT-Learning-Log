@@ -181,3 +181,100 @@ This would allow devices in the Intune Test Devices group to receive only the Pa
 This change should remove the overlapping policy assignment and resolve the Update Ring setting conflicts identified on the pilot device.
 
 Before making the change in the production environment, the proposed assignment modification should be reviewed and approved by the system administrator.
+
+
+## Step 4 – Investigate Update Ring Errors
+
+After reviewing the policy conflict, I investigated the five devices reporting errors under the Normal Patching Update Ring.
+
+All five devices showed the same error pattern.
+
+For documentation purposes, the device names were anonymized as Device-A through Device-E.
+
+The common findings were:
+
+- Logged-in user: SYSTEM account
+- Last check-in: Today
+- AllowWindows11Upgrade: Not applicable
+- Deadline for feature updates: Error
+- Deadline for quality updates: Error
+- Error code: 2016281111
+
+All five devices were running Windows 11.
+
+The OS versions were:
+
+- Two devices: 10.0.26200.8655
+- Three devices: 10.0.26100.8655
+
+Because the same errors appeared across devices running two different Windows builds, the issue did not appear to be limited to a single Windows version.
+
+---
+
+### Step 4.1 – Compare User and Device Context
+
+I reviewed the device configuration entries for the affected devices and found that the Normal Patching policy appeared twice on each device:
+
+- One entry under the SYSTEM account
+- One entry under the user's normal company account
+
+The deadline errors appeared only under the SYSTEM account entry.
+
+The same policy applied under the normal user account did not report the deadline errors.
+
+This showed that the error was occurring specifically in the device context rather than the user context.
+
+Since the Normal Patching policy is assigned to both All Devices and All Users, the same policy is being evaluated through both device-based and user-based assignments.
+
+---
+
+### Step 4.2 – Review Other Intune Policies
+
+I reviewed the other device configuration policies assigned to the affected devices to determine whether another Intune policy was also controlling Windows Update deadline settings.
+
+No additional Intune policies related to Windows Update, update deadlines, restart behavior, or patching were identified.
+
+This reduced the likelihood that the error was caused by another Intune configuration policy.
+
+---
+
+### Step 4.3 – Review Group Policy Possibilities
+
+Because the environment uses both on-premises Active Directory and Microsoft Intune, I also investigated whether Group Policy could be contributing to the issue.
+
+I generated a Group Policy Results report using:
+
+gpresult /h "%USERPROFILE%\Desktop\gpresult.html"
+
+I reviewed the applied Group Policy Objects and searched for policies related to:
+
+- Windows Update
+- Automatic Updates
+- Update deadlines
+- Windows Update for Business
+- Patching
+
+No clearly related Windows Update Group Policy was identified in the available report.
+
+However, the report was generated from my assigned workstation rather than directly from one of the five affected devices.
+
+Therefore, this could not fully confirm whether an affected device was receiving additional device-level Group Policy settings.
+
+---
+
+### Current Status and Escalation
+
+The investigation narrowed the issue to the device-context application of the Normal Patching policy.
+
+The current findings are:
+
+- All five affected devices show the same deadline errors.
+- The issue occurs only under the SYSTEM account / device context.
+- The same policy under the user context does not show the error.
+- The issue affects multiple Windows 11 builds.
+- No additional conflicting Intune update policy was identified.
+- No clearly related Windows Update GPO was identified from the available Group Policy report.
+
+Further investigation would require additional access to one of the affected devices or access to more detailed device-level Group Policy, registry, event log, or Windows Update diagnostic information.
+
+Because I did not have the required level of access to perform those checks directly, I documented the findings and escalated the issue to the system administrator for further investigation.
