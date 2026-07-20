@@ -278,3 +278,23 @@ The current findings are:
 Further investigation would require additional access to one of the affected devices or access to more detailed device-level Group Policy, registry, event log, or Windows Update diagnostic information.
 
 Because I did not have the required level of access to perform those checks directly, I documented the findings and escalated the issue to the system administrator for further investigation.
+
+
+## Project Summary
+
+- Reviewed existing Windows Update Rings to understand the current patching structure and policy assignments.
+- Compared the Normal Patching and Pilot policies to identify differences in update timing, deadlines, and restart behavior.
+- Reviewed deployment status to identify Conflict, Error, and Not Applicable devices.
+- Investigated the Pilot conflict and identified overlapping Normal Patching and Pilot policies on the same device.
+- Reviewed policy assignments and identified mixed user-based and device-based targeting as the likely cause of the overlap.
+- Recommended using a consistent device-based assignment model for the Update Rings.
+- Investigated five devices reporting the same Normal Patching errors.
+- Compared Windows builds to check whether the errors were limited to a specific OS version; the same errors appeared on multiple builds.
+- Compared SYSTEM and user-context policy entries to identify where the errors occurred; the errors appeared only in the device/SYSTEM context.
+- Reviewed other Intune policies to check for additional Windows Update configurations; none were found.
+- Generated a Group Policy Results report to check whether an Active Directory GPO could be controlling Windows Update settings:
+
+gpresult /h "%USERPROFILE%\Desktop\gpresult.html"
+
+- Reviewed the applied GPOs and found no clearly related Windows Update policy on the available workstation.
+- Escalated the remaining issue because further troubleshooting required direct access to an affected device or additional device-level diagnostic access.
