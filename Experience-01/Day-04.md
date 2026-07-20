@@ -4,6 +4,7 @@ Today, I will be working on the following tasks:
 
 - Start a Windows Update and Patch Management project using Microsoft Intune. | Completed ✅
 - BitLocker Encryption and Recovery Key Audit | Completed ✅
+- Create a Bitlocker Policy | Completed ✅
 - Troubleshoot and repair several laptops. 
 - Prepare new computers for incoming employees. | Completed ✅
 - Explore ways to better organize and manage IT devices and equipment in storage.
