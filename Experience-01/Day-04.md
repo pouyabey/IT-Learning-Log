@@ -332,7 +332,7 @@ I reviewed the following areas in Microsoft Intune:
 
 No existing BitLocker or disk encryption policies were found.
 
-### Step 3 – Create a BitLocker Pilot Policy
+### Step 3 – Create a BitLocker Policy
 
 I created a new BitLocker policy under Endpoint Security → Disk Encryption.
 
