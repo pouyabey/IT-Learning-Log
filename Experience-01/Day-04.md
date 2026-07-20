@@ -298,3 +298,52 @@ gpresult /h "%USERPROFILE%\Desktop\gpresult.html"
 
 - Reviewed the applied GPOs and found no clearly related Windows Update policy on the available workstation.
 - Escalated the remaining issue because further troubleshooting required direct access to an affected device or additional device-level diagnostic access.
+
+
+---
+
+
+##  BitLocker Encryption and Recovery Key Audit
+
+### Step 1 – Review Current Encryption Status
+
+I started by reviewing the Windows device encryption report in Microsoft Intune.
+
+The report included:
+
+- Device name
+- Operating system
+- OS version
+- TPM version
+- Encryption readiness
+- Encryption status
+- User principal name
+
+The audit showed that the number of encrypted and unencrypted devices was approximately equal.
+
+Most of the unencrypted devices were marked as Ready for encryption, indicating that many devices support BitLocker but are currently not encrypted.
+
+### Step 2 – Review Existing BitLocker Policies
+
+I reviewed the following areas in Microsoft Intune:
+
+- Endpoint Security → Disk Encryption
+- Devices → Configuration Policies
+
+No existing BitLocker or disk encryption policies were found.
+
+### Step 3 – Create a BitLocker Pilot Policy
+
+I created a new BitLocker policy under Endpoint Security → Disk Encryption.
+
+The policy was configured to:
+
+- Require device encryption
+- Configure recovery password rotation
+- Use XTS-AES 256-bit encryption for operating system and fixed data drives
+- Use AES-CBC 256-bit encryption for removable drives
+- Store BitLocker recovery information in Active Directory Domain Services
+- Prevent BitLocker activation until recovery information is backed up to AD DS
+- Use TPM-based BitLocker protection without requiring an additional startup PIN
+
+The policy was assigned only to the Intune Test Devices group for controlled testing before wider deployment.
